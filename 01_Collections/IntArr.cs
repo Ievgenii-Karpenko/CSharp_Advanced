@@ -4,7 +4,7 @@ namespace _01_Collections
 {
     class IntArr : IEnumerable, IEnumerator
     {
-        int[] ints = { 12, 13, 1, 4 };
+        int[] ints = { 12, 13, 1, 4, 5, 8 };
         int index = -1;
 
         // Реализуем интерфейс IEnumerable
