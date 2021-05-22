@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 
 namespace _02_Generics
 {
-    class UserInfo
+    internal class UserInfo
     {
-        public UserInfo(string Name, int Age)
+        private int _val;
+        public UserInfo(string Name, int Age) 
         {
             this.Name = Name;
             this.Age = Age;
+            
+            //if()
+            //{
+            //     //asdasd
+            //}
         }
 
         public string Name { get; set; }

@@ -1,4 +1,6 @@
-﻿namespace _02_Generics
+﻿using _01_Collections;
+
+namespace _02_Generics
 {
     class Class1<T>
     {
@@ -14,11 +16,15 @@
 
     // Унаследованный обобщенный класс
     class Class2_1<T> : Class1<T>
-    { }
+    { 
+
+    }
 
     // Ещё один унаследованный класс с собственными параметрами
     class Class2_2<T, V> : Class1<T>
-    { }
+    {
+        public V vObj;
+    }
 
     class Class3<T, V, E, G> : Class2_2<T, V>
     { }

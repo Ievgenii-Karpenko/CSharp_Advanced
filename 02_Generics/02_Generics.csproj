@@ -6,4 +6,8 @@
     <RootNamespace>_02_Generics</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\01_Collections\01_Collections.csproj" />
+  </ItemGroup>
+
 </Project>

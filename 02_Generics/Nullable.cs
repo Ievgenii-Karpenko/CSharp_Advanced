@@ -28,6 +28,7 @@ namespace _02_Generics
                 return value;
             }
         }
+
         public static explicit operator T(Nullable<T> value)
         {
             return value.Value;

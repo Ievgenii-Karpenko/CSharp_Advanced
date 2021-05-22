@@ -1,21 +1,17 @@
-﻿using System;
+﻿using _01_Collections;
+using System;
+using System.Collections;
 
 namespace _02_Generics
 {
-    class MyObj<T>
+    class MyObj
     {
-        T obj;
-
-        public MyObj(T obj)
-        {
-            this.obj = obj;
-        }
-
-        public void objectType()
-        {
-            Console.WriteLine("Object type: " + typeof(T));
-        }
+        int obj1;
     }
+
+    //<MyObj>
+    //    <obj1></obj1>
+    //</MyObj>
 
     class MyObjects<T, V, E>
     {
@@ -30,7 +26,7 @@ namespace _02_Generics
             this.obj3 = obj3;
         }
 
-        public void objectsType()
+        public void ObjectInfo()
         {
             Console.WriteLine("\nObject type 1: " + typeof(T) +
                 "\nObject type 2: " + typeof(V) +
@@ -43,20 +39,36 @@ namespace _02_Generics
         static void Main()
         {
             //Generics
-            { 
-                //MyObj<int> obj1 = new MyObj<int>(25);
-                //obj1.objectType();
+            {
+                //MyObj<int, string> my = new MyObj<int, string>();
+                //my.Set("dsfsdf");
+                //my.Set(123);
+
+                //MyObj<string, string> my2 = new MyObj<string, string>();
+                //my2.Set("dsfsdf");
+
+                //MyObj<MyCl> obj1 = new MyObj<MyCl>();
+                //obj1.ObjectInfo();
+
+                //MyObj<double> obj2 = new MyObj<double>(25.5);
+                //obj2.ObjectInfo();
+
+                //MyObj<string> obj3 = new MyObj<string>("asasdasd");
+                //obj3.ObjectInfo();
 
                 //MyObjects<string, byte, decimal> obj2 = new MyObjects<string, byte, decimal>("John", 26, 12.423m);
-                //obj2.objectsType();
+                //obj2.ObjectInfo();
             }
 
             //Constraints
             {
-                //Info<FamilyInfoUser> database1 = new Info<FamilyInfoUser>();
+                //Info<UserInfo> database1 = new Info<UserInfo>();
                 //database1.Add(new FamilyInfoUser(Name: "Alex", Family: "Smith", Age: 26));
                 //database1.Add(new FamilyInfoUser(Name: "Donald", Family: "Johnson", Age: 28));
                 //database1.Add(new FamilyInfoUser(Name: "Mishel", Family: "Obama", Age: 50));
+                //database1.Add(new UserInfo(Name: "Alex", Age: 26));
+                //database1.Add(new UserInfo(Name: "Donald", Age: 28));
+                //database1.Add(new UserInfo(Name: "Mishel", Age: 50));
 
                 //database1.ReWrite();
             }
@@ -89,10 +101,23 @@ namespace _02_Generics
 
             //Nullable
             {
-                Nullable<int> x;
-                x = 4;
+                //int a = null;
+                //Console.WriteLine($"a = {a}");
+                //if (!a.HasValue)
+                //    a = 5;
 
-                Console.ReadLine();
+                //Console.WriteLine($"a = {a.Value}");
+
+                //Nullable<int> x = default;
+                ////x = 4;
+
+                //Console.WriteLine($"x = {x}");
+                //if (!x.HasValue)
+                //    x = 5;
+
+                //Console.WriteLine($"x = {x.Value}");
+
+                //Console.ReadLine();
             }
 
             Console.ReadLine();
@@ -104,3 +129,27 @@ namespace _02_Generics
         public static int x;
     }
 }
+
+
+//Common
+// IMassage
+//   -- From
+//   -- ToWhom
+//   -- Text
+//   -- TimeStamp
+// optional
+//   -- Color, textFormat etc
+
+// Client:
+// SendMessage(IMessage msg)
+// ConnectToServer(IP, Port)
+// ReciveMessage(IMessage msg)
+
+
+// Server
+// GetMessage
+// NotifyAll(IMessage msg)
+// NotifyAll(Client, IMessage msg)
+// List of Clients
+
+
