@@ -143,7 +143,7 @@ namespace _02_Generics
 // Client:
 // SendMessage(IMessage msg)
 // ConnectToServer(IP, Port)
-// ReciveMessage(IMessage msg)
+// ReceiveMessage(IMessage msg)
 
 
 // Server
