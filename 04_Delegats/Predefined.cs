@@ -54,5 +54,10 @@ namespace _04_Delegats
         {
             return obj1.Salary < obj2.Salary;
         }
+
+        public static bool UserExist(UserInfo obj)
+        {
+            return obj.Name == "Jeff";
+        }
     }
 }

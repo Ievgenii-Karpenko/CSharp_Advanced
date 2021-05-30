@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "02_2_Covariant", "02_2_Cova
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientChat1", "ClientChat1\ClientChat1.csproj", "{926B8DAB-D53A-4389-AC2D-1E209E8FC183}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04_Events", "04_Events\04_Events.csproj", "{A88DCBD7-4B89-4D08-973C-9DCC33037210}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04_2_Events", "04_2_Events\04_2_Events.csproj", "{22F57C8A-5561-40E1-ADE1-45B6D2EE7C24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{926B8DAB-D53A-4389-AC2D-1E209E8FC183}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{926B8DAB-D53A-4389-AC2D-1E209E8FC183}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{926B8DAB-D53A-4389-AC2D-1E209E8FC183}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A88DCBD7-4B89-4D08-973C-9DCC33037210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A88DCBD7-4B89-4D08-973C-9DCC33037210}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A88DCBD7-4B89-4D08-973C-9DCC33037210}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A88DCBD7-4B89-4D08-973C-9DCC33037210}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22F57C8A-5561-40E1-ADE1-45B6D2EE7C24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22F57C8A-5561-40E1-ADE1-45B6D2EE7C24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22F57C8A-5561-40E1-ADE1-45B6D2EE7C24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22F57C8A-5561-40E1-ADE1-45B6D2EE7C24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
