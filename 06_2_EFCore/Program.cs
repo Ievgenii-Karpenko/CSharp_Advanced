@@ -16,12 +16,12 @@ namespace _06_2_EFCore
             // получаем конфигурацию из файла appsettings.json
             builder.AddJsonFile("appsettings.json");
             // создаем конфигурацию
-            var config = builder.Build();
+            IConfigurationRoot config = builder.Build();
             // получаем строку подключения
             string connectionString = config.GetConnectionString("DefaultConnection");
 
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
-            var options = optionsBuilder
+            DbContextOptionsBuilder<ApplicationContext> optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+            DbContextOptions<ApplicationContext> options = optionsBuilder
                 .UseSqlServer(connectionString)
                 .Options;
 

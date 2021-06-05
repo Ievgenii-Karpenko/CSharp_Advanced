@@ -50,6 +50,8 @@ namespace _06_3_EFCore_Linq
                     var users = db.Users.Where(p => EF.Functions.Like(p.Name, "%Tom%"));
                     foreach (User user in users)
                         Console.WriteLine($"{user.Name} ({user.Age})");
+
+                    IQueryable<User> a = db.Users.FromSqlRaw("SELECT * FROM Users").Where(f => asdas);
                 }
 
                 // %: соответствует любой подстроке, которая может иметь любое количество символов, при этом подстрока может и не содержать ни одного символа

@@ -14,7 +14,7 @@ namespace ClientChat1
 {
     public partial class Form1 : Form
     {
-        // private IServer server;
+        private TcpClient server;
 
         public Form1()
         {
@@ -31,6 +31,12 @@ namespace ClientChat1
                 }
             }
 
+            server = new TcpClient();
+            server.Connect("192.168.0.111", 5454);
+            //var str = client.GetStream();
+
+            ClientObject cl = new ClientObject(server, null);
+
             InitializeComponent();
 
             
@@ -41,6 +47,9 @@ namespace ClientChat1
         {
             SendToServer(input_textBox.Text);
             input_textBox.Clear();
+
+            byte[] data = Encoding.Unicode.GetBytes(input_textBox.Text);
+            server.GetStream().Write(data, 0, data.Length); //передача данных
         }
 
         private void connectButton_Click(object sender, EventArgs e)

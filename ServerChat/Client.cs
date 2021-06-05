@@ -13,9 +13,9 @@ namespace ClientChat1
         public NetworkStream Stream { get; private set; }
         string userName;
         TcpClient client;
-        ServerObject server; // объект сервера
+        //ServerObject server; // объект сервера
 
-        public ClientObject(TcpClient tcpClient, ServerObject serverObject)
+        public ClientObject(TcpClient tcpClient)//, ServerObject serverObject)
         {
             Id = Guid.NewGuid().ToString();
             client = tcpClient;
@@ -27,7 +27,7 @@ namespace ClientChat1
         {
             try
             {
-                Stream = client.GetStream();
+                //Stream = client.GetStream();
                 //// получаем имя пользователя
                 string message;//= GetMessage();
                 //userName = message;
@@ -50,7 +50,7 @@ namespace ClientChat1
                     {
                         message = string.Format("{0}: покинул чат", userName);
                         Console.WriteLine(message);
-                        server.SendMessage(message, this.Id);
+                        //server.SendMessage(message, this.Id);
                         break;
                     }
                 }
@@ -62,7 +62,7 @@ namespace ClientChat1
             finally
             {
                 // в случае выхода из цикла закрываем ресурсы
-                server.RemoveConnection(this.Id);
+                //server.RemoveConnection(this.Id);
                 Close();
             }
         }
