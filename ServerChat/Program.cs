@@ -13,9 +13,12 @@ namespace ServerChat
 
         static void Main(string[] args)
         {
-            client = new TcpClient();
-            client.Connect("192.168.0.111", 5454);
-            str = client.GetStream();
+            ServerObject s = new ServerObject();
+            s.Listen();
+
+            //client = new TcpClient();
+            //client.Connect("192.168.31.137", 5454);
+            //str = client.GetStream();
 
             //string message = "";
             //byte[] data = Encoding.Unicode.GetBytes(message);

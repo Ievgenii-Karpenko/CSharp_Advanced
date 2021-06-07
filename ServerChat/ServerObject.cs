@@ -40,7 +40,7 @@ namespace ServerChat
                 {
                     TcpClient tcpClient = tcpListener.AcceptTcpClient();
 
-                    ClientObject clientObject = new ClientObject(tcpClient, this);
+                    ClientObject clientObject = new ClientObject(tcpClient);
                     Thread clientThread = new Thread(new ThreadStart(clientObject.Process));
                     clientThread.Start();
                 }

@@ -32,7 +32,7 @@ namespace ClientChat1
             }
 
             server = new TcpClient();
-            server.Connect("192.168.0.111", 5454);
+            server.Connect("192.168.31.137", 8888);
             //var str = client.GetStream();
 
             ClientObject cl = new ClientObject(server, null);

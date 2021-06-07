@@ -19,6 +19,7 @@ namespace ClientChat1
         {
             Id = Guid.NewGuid().ToString();
             client = tcpClient;
+            Stream = client.GetStream();
             //server = serverObject;
             //serverObject.AddConnection(this);
         }
