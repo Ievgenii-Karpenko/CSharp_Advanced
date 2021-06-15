@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "09_1_Threads": {
+      "commandName": "Project"
+    },
+    "newProfile1": {
+      "commandName": "Executable"
+    }
+  }
+}

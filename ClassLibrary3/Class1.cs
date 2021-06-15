@@ -11,17 +11,8 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary2
 {
-    //extern alias MoqV1;
-    //extern alias MoqV2;
-
-    //using Class1V1 = MoqV1::Moq.Mock;
-    //using Class1V2 = MoqV2::Moq.Mock;
-
     namespace ClassLibrary1
     {
-        public enum A
-        { }
-
 
         public class Person
         {
@@ -30,9 +21,6 @@ namespace ClassLibrary2
 
             private int myInt; // private fields are ignored
 
-            //public Company Company { get; set; }
-
-            // we need default c-tor for work
             public Person()
             { }
 
@@ -45,8 +33,6 @@ namespace ClassLibrary2
             public void SetMyInt(int val)
             {
                 myInt = val;
-
-                //Class1V1 o1 = new Class1V1();
             }
 
             public int Sum(int a, int b) => a + b;
@@ -56,7 +42,7 @@ namespace ClassLibrary2
 
     public class GitHubInfo
     {
-        public async Task<string> GetPullRequestAsync()
+        public virtual string GetPullRequestAsync()
         {
             HttpClient client = new HttpClient(); // Створюємо клієн для відправки запросів
 
@@ -65,16 +51,16 @@ namespace ClassLibrary2
             var productValue = new ProductInfoHeaderValue("X-GitHub-Media-Type", "github.v3");
             request.Headers.UserAgent.Add(productValue);
 
-            HttpResponseMessage response = await client.SendAsync(request);
+            HttpResponseMessage response = client.Send(request);
 
-            string json = await response.Content.ReadAsStringAsync();
+            string json = response.Content.ReadAsStringAsync().Result;
 
             return json;
         }
 
-        public virtual string GetUserFromPR()
+        public string GetUserFromPR()
         {
-            string prJson = GetPullRequestAsync().Result;
+            string prJson = GetPullRequestAsync();
 
             var pull = JsonSerializer.Deserialize<Pull>(prJson);
 
