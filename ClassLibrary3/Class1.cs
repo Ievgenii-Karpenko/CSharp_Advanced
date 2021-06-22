@@ -9,10 +9,8 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 
-namespace ClassLibrary2
+namespace ClassLibrary3
 {
-    namespace ClassLibrary1
-    {
 
         public class Person
         {
@@ -38,7 +36,6 @@ namespace ClassLibrary2
             public int Sum(int a, int b) => a + b;
             private int Div(int a, int b) => a / b;
         }
-    }
 
     public class GitHubInfo
     {
@@ -63,6 +60,9 @@ namespace ClassLibrary2
             string prJson = GetPullRequestAsync();
 
             var pull = JsonSerializer.Deserialize<Pull>(prJson);
+
+            if (pull != null)
+                return "";
 
             return pull.User.Login;
         }
