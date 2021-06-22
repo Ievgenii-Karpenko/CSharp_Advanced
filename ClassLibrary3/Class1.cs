@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -12,36 +13,43 @@ using System.Threading.Tasks;
 namespace ClassLibrary3
 {
 
-        public class Person
+    public class Person
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+
+        private int myInt; // private fields are ignored
+
+        public Person()
+        { }
+
+        public Person(string name, int age)
         {
-            public string Name { get; set; }
-            public int Age { get; set; }
-
-            private int myInt; // private fields are ignored
-
-            public Person()
-            { }
-
-            public Person(string name, int age)
-            {
-                Name = name;
-                Age = age;
-            }
-
-            public void SetMyInt(int val)
-            {
-                myInt = val;
-            }
-
-            public int Sum(int a, int b) => a + b;
-            private int Div(int a, int b) => a / b;
+            Name = name;
+            Age = age;
         }
+
+        public void SetMyInt(int val)
+        {
+            myInt = val;
+        }
+
+        public int Sum(int a, int b) => a + b;
+        private int Div(int a, int b) => a / b;
+    }
 
     public class GitHubInfo
     {
+        public List<Pull> PullRequests;
+
+        public GitHubInfo()
+        {
+            PullRequests = new List<Pull>();
+        }
+
         public virtual string GetPullRequestAsync()
         {
-            HttpClient client = new HttpClient(); // Створюємо клієн для відправки запросів
+            HttpClient client = new HttpClient(); // Створюємо клієнт для відправки запросів
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "https://api.github.com/repos/Ievgenii-Karpenko/CSharp_Advanced/pulls/1");
 
@@ -61,10 +69,43 @@ namespace ClassLibrary3
 
             var pull = JsonSerializer.Deserialize<Pull>(prJson);
 
-            if (pull != null)
+            if (pull == null)
                 return "";
 
+            PullRequests.Add(pull);
+
             return pull.User.Login;
+        }
+
+        public bool SavePullRequestToDosk(string path, out string error, Pull request = null)
+        {
+            string data = string.Empty;
+            if (request == null)
+            {
+                
+                foreach (var item in PullRequests)
+                {
+                    data += item.ToString();
+                }
+                File.WriteAllText(path, data);
+            }
+            else
+            {
+                data = request.ToString();
+            }
+
+            try
+            {
+                File.WriteAllText(path, data);
+                error = string.Empty;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+            }
+
+            return false;
         }
     }
 
@@ -75,6 +116,15 @@ namespace ClassLibrary3
 
         [JsonPropertyName("user")]
         public User User { get; set; }
+
+        [JsonPropertyName("title")]
+        public string Title { get; set; }
+
+        [JsonPropertyName("number")]
+        public int Number { get; set; }
+
+        [JsonPropertyName("body")]
+        public string Description { get; set; }
     }
 
     public class User
