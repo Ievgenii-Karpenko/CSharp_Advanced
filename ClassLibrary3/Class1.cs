@@ -77,7 +77,7 @@ namespace ClassLibrary3
             return pull.User.Login;
         }
 
-        public bool SavePullRequestToDosk(string path, out string error, Pull request = null)
+        public bool SavePullRequestToDіsk(string path, out string error, Pull request = null)
         {
             string data = string.Empty;
             if (request == null)
