@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace ConsoleApplication1
+namespace Covariant
 {
     class Account
     {
@@ -18,7 +19,7 @@ namespace ConsoleApplication1
     }
 
     //Covariant/contrvariant/invariant interface
-    interface IBank<in T>
+    interface IBank<out T>
     {
         T CreateAccount(int sum);
     }
@@ -37,9 +38,8 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-
-            IBank<DepositAccount> depositBank = new Bank<Account>();
-            Account acc1 = depositBank.CreateAccount(25);
+            IBank<DepositAccount> depositBank = new Bank<DepositAccount>();
+            Account acc1 = depositBank.CreateAccount(34);
 
             //       T                                  T : Account
             IBank<Account> ordinaryBank = new Bank<DepositAccount>();
@@ -51,4 +51,65 @@ namespace ConsoleApplication1
         }
     }
     
+}
+
+namespace Contrvariant
+{
+    class Account
+    {
+        public virtual void DoTransfer(int sum)
+        {
+            Console.WriteLine($"Клиент положил на счет {sum} $");
+        }
+    }
+    class DepositAccount : Account
+    {
+        public override void DoTransfer(int sum)
+        {
+            Console.WriteLine($"Клиент положил на депозитный счет {sum} $");
+        }
+    }
+
+    interface ITransaction<in T>
+    {
+        void DoOperation(T account, int sum);
+    }
+
+    class Transaction<T> : ITransaction<T> where T : Account
+    {
+        public void DoOperation(T account, int sum)
+        {
+            account.DoTransfer(sum);
+        }
+    }
+
+    class A
+    {
+
+    }
+
+    class B : A
+    {
+
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            IList<A> list1 = new List<A>();
+            list1.Add(new A());
+            list1.Add(new B());
+
+
+            ITransaction<Account> accTransaction = new Transaction<Account>();
+            accTransaction.DoOperation(new Account(), 400);
+
+            ITransaction<DepositAccount> depAccTransaction = new Transaction<Account>();
+            depAccTransaction.DoOperation(new DepositAccount(), 450);
+
+            Console.Read();
+        }
+    }
+
 }

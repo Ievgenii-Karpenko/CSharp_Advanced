@@ -25,9 +25,10 @@ namespace _05_Linq_to_Sql
             }
 
             // Фільтрація в запиті
-            var query = from u in db.GetTable<User>()
+            // 
+            IQueryable<User> query = from u in db.GetTable<User>()
                         where u.Age > 25
-                        orderby u.Name
+                        //orderby u.Name
                         select u;
             // або так
             // var query = db.GetTable<User>().Where(u => u.Age > 25).OrderBy(u => u.FirstName);
@@ -43,7 +44,7 @@ namespace _05_Linq_to_Sql
             // ORDER BY[t0].[Name]
 
             // Змінимо об"єкт в таблиці
-            users.First().Age = 28;
+            // Array.ForEach<List<User>>(users, u => u.Age = 28);
             // оновимо дані в БД
             db.SubmitChanges();
         }
@@ -55,7 +56,7 @@ namespace _05_Linq_to_Sql
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
 
-        [Column(Name = "Name")]
+        [Column(Name = "UserName")]
         public string Name { get; set; }
 
         [Column]

@@ -17,22 +17,25 @@ namespace _09_Threads
             
             // Thread info
             {
-                //Thread t = Thread.CurrentThread;
+                Thread t = Thread.CurrentThread;
 
-                ////Get thread name
-                //Console.WriteLine($"Имя потока: {t.Name}");
-                //t.Name = "-- Main thread --";
-                //Console.WriteLine($"Имя потока: {t.Name}");
+                //Get thread name
+                Console.WriteLine($"Имя потока: {t.Name}");
+                t.Name = "-- Main thread --";
+                Console.WriteLine($"Имя потока: {t.Name}");
 
-                //Console.WriteLine($"Запущен ли поток: {t.IsAlive}");
-                //Console.WriteLine($"Приоритет потока: {t.Priority}");
-                //Console.WriteLine($"Статус потока: {t.ThreadState}");
+                Console.WriteLine($"Запущен ли поток: {t.IsAlive}");
+                Console.WriteLine($"Приоритет потока: {t.Priority}");
+                Console.WriteLine($"Статус потока: {t.ThreadState}");
 
-                //// Get thread domain
-                //Console.WriteLine($"Домен приложения: {Thread.GetDomain().FriendlyName}");
+                // Get thread domain
+                Console.WriteLine($"Домен приложения: {Thread.GetDomain().FriendlyName}");
 
                 Task<string> t1 = Task.Factory.StartNew(() => "Hello!");
                 Task t2 = new Task(Count1);
+
+                t2.Start();
+
 
                 Task[] tasks = new Task[4]
                 {
@@ -49,48 +52,47 @@ namespace _09_Threads
 
                 //t1.Wait();
                 Task.WaitAll(tasks);
-
                 Console.WriteLine(t1.Result);
             }
 
             // Create a thread
             {
-                //Thread myThread = new Thread(Count1); // using of ThreadStart delegate
-                //myThread.Start(); // run thread
-                //myThread.IsBackground = true;
+                Thread myThread = new Thread(Count1); // using of ThreadStart delegate
+                myThread.Start(); // run thread
+                myThread.IsBackground = true;
                 //myThread.Priority = ThreadPriority.
 
-                //for (int i = 1; i < 30; i++)
-                //{
-                //    Console.ForegroundColor = ConsoleColor.Red;
-                //    Console.WriteLine($"Main Thread: {i}");
-                //    //Thread.Sleep(300);
-                //}
+                for (int i = 1; i < 30; i++)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Main Thread: {i}");
+                    //Thread.Sleep(300);
+                }
             }
 
             // Parameterized Thread
             {
-                //int number = 4;
-                //// создаем новый поток
-                //Thread myThread = new Thread(Count);
-                //myThread.Start(new object[] { 28, number });
+                int number = 4;
+                // создаем новый поток
+                Thread myThread = new Thread(Count);
+                myThread.Start(new object[] { 28, number });
 
-                //for (int i = 1; i < 9; i++)
-                //{
-                //    Console.WriteLine("Главный поток:");
-                //    Console.WriteLine(i * i);
-                //    Thread.Sleep(300);
-                //}
+                for (int i = 1; i < 9; i++)
+                {
+                    Console.WriteLine("Главный поток:");
+                    Console.WriteLine(i * i);
+                    Thread.Sleep(300);
+                }
 
                 //What if we need more then one parameter?
             }
 
             //Better way to use Parameterized Thread
             {
-                //Counter counter = new Counter(5, 4);
+                Counter counter = new Counter(5, 4);
 
-                //Thread myThread = new Thread(counter.Count);
-                //myThread.Start();
+                Thread myThread = new Thread(counter.Count);
+                myThread.Start();
             }
         }
 

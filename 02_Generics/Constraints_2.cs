@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _02_Generics
 {
-    struct UI
+    class UI
     {
         public UI(string Name, int Age)
         {
@@ -19,11 +19,11 @@ namespace _02_Generics
     }
 
     // Обобщенный класс, использующий ограничение на тип значения
-    class UserInfo<T> where T : struct
+    struct UserInfo2<T> where T : class
     {
         T obj;
 
-        public UserInfo(T ob)
+        public UserInfo2(T ob)
         {
             obj = ob;
         }

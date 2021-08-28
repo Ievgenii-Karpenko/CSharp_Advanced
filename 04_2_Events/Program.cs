@@ -26,7 +26,7 @@ namespace _04_2_Events
 
     class Program
     {
-        public static void SomeM(object s, MyEventArgs arg)
+        public static void SomeM(object sender, MyEventArgs arg)
         {
             Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }

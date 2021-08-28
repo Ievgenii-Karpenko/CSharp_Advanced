@@ -118,18 +118,18 @@ namespace _05_Linq
 
                 //Creating of new anonymous type
                 PrintSeparator();
-                //var items = from u in users
-                //            select new
-                //            {
-                //                FirstName = u.Name,
-                //                DateOfBirth = DateTime.Now.Year - u.Age
-                //            };
+                var items = from u in users
+                            select new
+                            {
+                                FirstName = u.Name,
+                                DateOfBirth = DateTime.Now.Year - u.Age
+                            };
                 //Same with extensions
-                var items = users.Select(u => new
-                {
-                    FirstName = u.Name,
-                    DateOfBirth = DateTime.Now.Year - u.Age
-                });
+                //var items = users.Select(u => new
+                //{
+                //    FirstName = u.Name,
+                //    DateOfBirth = DateTime.Now.Year - u.Age
+                //});
 
                 foreach (var n in items)
                     Console.WriteLine($"{n.FirstName} - {n.DateOfBirth}");
@@ -199,14 +199,14 @@ namespace _05_Linq
                     new User { Name = "Sam", Age = 43 }
                 };
 
-                //var sortedUsers = from u in users
-                //                  orderby u.Name // Сортувати за полем об"єкту (за зростанням)
-                //                  //orderby u.Name descending // Сортувати за полем об"єкту (за спаданням)
-                //                  orderby u.Name, u.Age // Сортування за двома ознаками
-                //                  select u;
+                var sortedUsers = from u in users
+                                  orderby u.Name // Сортувати за полем об"єкту (за зростанням)
+                                  orderby u.Name descending // Сортувати за полем об"єкту (за спаданням)
+                                  orderby u.Name, u.Age // Сортування за двома ознаками
+                                  select u;
 
                 // аналогічне сортування через методи розширення
-                var sortedUsers = users.OrderBy(u => u);
+                //var sortedUsers = users.OrderBy(u => u);
                 //sortedUsers = users.OrderByDescending(u => u.Name);
 
                 foreach (User u in sortedUsers)
@@ -250,8 +250,8 @@ namespace _05_Linq
 
                 // різниця наборів
                 var result = soft.Except(hard);
-                //result = soft.Union(hard);
-                //result = soft.Intersect(hard);
+                result = soft.Union(hard);
+                result = soft.Intersect(hard);
 
                 foreach (string s in result)
                     Console.WriteLine(s);

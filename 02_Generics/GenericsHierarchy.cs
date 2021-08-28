@@ -10,7 +10,13 @@ namespace _02_Generics
         {
             //someField = null;
             //someField = 0;
-            SomeField = default(T);
+            SomeField = default;
+
+            //if (SomeField.GetType() == typeof(int))
+            //{ 
+            //    // SomeField = 18; can be set via reflection
+            //}
+
         }
     }
 

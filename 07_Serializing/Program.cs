@@ -33,7 +33,7 @@ namespace _07_Serializing
 
                     throw;
                 }
-                
+
 
                 // deserialize from people.dat
                 using (FileStream fs = new FileStream("people.dat", FileMode.OpenOrCreate))

@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace _06_3_EFCore_Linq
 {
@@ -51,7 +52,7 @@ namespace _06_3_EFCore_Linq
                     foreach (User user in users)
                         Console.WriteLine($"{user.Name} ({user.Age})");
 
-                    IQueryable<User> a = db.Users.FromSqlRaw("SELECT * FROM Users").Where(f => asdas);
+                    //IQueryable<User> a = db.Users.FromSqlRaw("SELECT * FROM Users").Where(f => asdas);
                 }
 
                 // %: соответствует любой подстроке, которая может иметь любое количество символов, при этом подстрока может и не содержать ни одного символа

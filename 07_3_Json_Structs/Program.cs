@@ -44,4 +44,4 @@ namespace _07_3_Json_Structs
 }
 
 
-https://docs.microsoft.com/en-us/dotnet/standard/serialization/system-text-json-supported-collection-types?pivots=dotnet-5-0
+//https://docs.microsoft.com/en-us/dotnet/standard/serialization/system-text-json-supported-collection-types?pivots=dotnet-5-0

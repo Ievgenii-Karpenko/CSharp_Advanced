@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
@@ -8,51 +9,40 @@ using System.Threading.Tasks;
 
 namespace _07_2_JSonSerializer
 {
+    public class Company
+    {
+        public int Age { get; set; }
+    }
+
     class Person
     {
-        [JsonPropertyName("firstname")]
-        public string Name { get; set; }
+        public List<Company> data = new List<Company>();
 
-        public int Age { get; set; }
-
-
-        public string BossName { get; set; }
-
-        public float Fl { get; set; }
-
-        public Person() {} 
-        public Person(string name, int age, string boss) => (Name, Age, BossName) = (name, age, boss);
+        public string Name;
     }
 
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             // 1
             {
-                System.Globalization.NumberFormatInfo s = new System.Globalization.NumberFormatInfo() { NumberDecimalSeparator = "_" };
-                CultureInfo culture2 = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
-                culture2.NumberFormat = s;
-
-                Thread.CurrentThread.CurrentCulture = culture2;
-
-                int a;
-                int b;
-
-                (a, b) = (123, 123);
-
-
-
-
                 var options = new JsonSerializerOptions
                 {
                     WriteIndented = true,
-                    IgnoreNullValues = true,
+                    //IgnoreNullValues = true,
                     //NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString
                 };
 
-                Person tom = new Person { Name = "Tom", Age = 35, Fl = 123.456789f };
-                
+                Person tom = new Person() { Name = "Tom" };
+                tom.data.Add(new Company() { Age = 15 });
+                tom.data.Add(new Company() { Age = 57 });
+
+                //Dictionary<int, Company> data = new Dictionary<int, Company>();
+                //data.Add(2, new Company() { Age = 25});
+                //data.Add(7, new Company() { Age = 32 });
+
+
                 string json = JsonSerializer.Serialize(tom, options);
                 // 
                 //string json = "{\"firstname\":\"Tom\",\"Age\":\"35\"}";
@@ -60,25 +50,25 @@ namespace _07_2_JSonSerializer
                 Console.WriteLine(json);
 
                 Person restoredPerson = JsonSerializer.Deserialize<Person>(json, options);
-                Console.WriteLine(restoredPerson.Name);
+                //Console.WriteLine(restoredPerson.Name);
             }
 
             // Async
-            {
-                //using (FileStream fs = new FileStream("user.json", FileMode.OpenOrCreate))
-                //{
-                //    Person tom = new Person() { Name = "Tom", Age = 35 };
-                //    Task a = JsonSerializer.SerializeAsync<Person>(fs, tom);
-                //    Console.WriteLine("Data has been saved to file");
-                //}
+            //{
+            //    using (FileStream fs = new FileStream("user.json", FileMode.OpenOrCreate))
+            //    {
+            //        Person tom = new Person() { Name = "Tom", Age = 35 };
+            //        Task a = JsonSerializer.SerializeAsync<Person>(fs, tom);
+            //        Console.WriteLine("Data has been saved to file");
+            //    }
 
-                //// Read
-                //using (FileStream fs = new FileStream("user.json", FileMode.OpenOrCreate))
-                //{
-                //    Person restoredPerson = await JsonSerializer.DeserializeAsync<Person>(fs);
-                //    Console.WriteLine($"Name: {restoredPerson.Name}  Age: {restoredPerson.Age}");
-                //}
-            }
+            //    // Read
+            //    using (FileStream fs = new FileStream("user.json", FileMode.OpenOrCreate))
+            //    {
+            //        Person restoredPerson = await JsonSerializer.DeserializeAsync<Person>(fs);
+            //        Console.WriteLine($"Name: {restoredPerson.Name}  Age: {restoredPerson.Age}");
+            //    }
+            //}
 
             //using of attributes 
             //[JsonPropertyName("firstname")]
@@ -89,7 +79,7 @@ namespace _07_2_JSonSerializer
             //    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             //};
 
-            
+
 
         }
     }

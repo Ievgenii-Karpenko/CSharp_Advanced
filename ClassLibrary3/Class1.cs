@@ -15,6 +15,7 @@ namespace ClassLibrary3
 
     public class Person
     {
+        public static int Number = 0;
         public string Name { get; set; }
         public int Age { get; set; }
 
@@ -34,7 +35,12 @@ namespace ClassLibrary3
             myInt = val;
         }
 
-        public int Sum(int a, int b) => a + b;
+        public int Sum(int a, int b)
+        {
+            Number = a + b;
+            return Number;
+        }
+
         private int Div(int a, int b) => a / b;
     }
 
@@ -67,7 +73,7 @@ namespace ClassLibrary3
         {
             string prJson = GetPullRequestAsync();
 
-            var pull = JsonSerializer.Deserialize<Pull>(prJson);
+            Pull pull = JsonSerializer.Deserialize<Pull>(prJson);
 
             if (pull == null)
                 return "";

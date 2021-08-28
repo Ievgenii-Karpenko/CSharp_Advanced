@@ -11,16 +11,16 @@ namespace _09_2_Sync
 
         public void Count()
         {
-            //lock (sync)
-            //{
-            //    x = 1;
-            //    for (int i = 1; i < 9; i++)
-            //    {
-            //        Console.WriteLine($"{Thread.CurrentThread.Name}: {x}");
-            //        x++;
-            //        Thread.Sleep(100);
-            //    }
-            //}
+            lock (sync)
+            {
+                x = 1;
+                for (int i = 1; i < 9; i++)
+                {
+                    Console.WriteLine($"{Thread.CurrentThread.Name}: {x}");
+                    x++;
+                    Thread.Sleep(100);
+                }
+            }
 
             // What the compiler do?
             {

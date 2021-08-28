@@ -5,7 +5,8 @@ namespace _09_3_Mutex
 {
     class Program
     {
-        static Semaphore mutexObj = new Semaphore(3,3);
+        static Semaphore sem = new Semaphore(3,3);
+        static Mutex mutexObj = new Mutex();
         static int x = 0;
 
         static void Main(string[] args)
@@ -21,7 +22,7 @@ namespace _09_3_Mutex
         }
         public static void Count()
         {
-            mutexObj.WaitOne();
+            sem.WaitOne();
             x = 1;
             for (int i = 1; i < 9; i++)
             {
@@ -29,7 +30,7 @@ namespace _09_3_Mutex
                 x++;
                 Thread.Sleep(100);
             }
-            mutexObj.Release();
+            sem.Release();
         }
     }
 }

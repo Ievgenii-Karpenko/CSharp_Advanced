@@ -45,7 +45,7 @@ namespace _04_Delegats
         // Переопределим метод ToString
         public override string ToString()
         {
-            return string.Format("{0} {1}, {2:C}", Name, Family, Salary);
+            return $"{Name} {Family}, {Salary, 2:C}";
         }
 
         // Данный метод введен для соответствия сигнатуре 
@@ -53,6 +53,11 @@ namespace _04_Delegats
         public static bool UserSalary(UserInfo obj1, UserInfo obj2)
         {
             return obj1.Salary < obj2.Salary;
+        }
+
+        public static int UserName(UserInfo obj1, UserInfo obj2)
+        {
+            return obj1.Name.CompareTo(obj2.Name);
         }
 
         public static bool UserExist(UserInfo obj)

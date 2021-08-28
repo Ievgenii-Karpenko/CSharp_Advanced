@@ -2,7 +2,7 @@
 
 namespace _04_Events
 {
-    delegate void UI(object sender, EventArgs eventArgs);
+    delegate void UI();
 
     class MyEvent
     {
@@ -11,10 +11,7 @@ namespace _04_Events
         // Method to invoke event
         public void OnUserEvent()
         {
-            //if(UserEvent != null)
-            //{ 
-                UserEvent.Invoke();
-            //}
+            UserEvent?.Invoke();
         }
     }
 
@@ -66,12 +63,9 @@ namespace _04_Events
 
             // Adding of event handler
             evt.UserEvent += user1.UserInfoHandler;
-            //evt.UserEvent -= user1.UserInfoHandler;
+            evt.UserEvent -= user1.UserInfoHandler;
 
-            //
-            //...
             // Invoke event
-
             evt.OnUserEvent();
 
             Console.ReadLine();
@@ -81,24 +75,27 @@ namespace _04_Events
     class MyCustomEvent
     {
         UI[] evnt = new UI[5];
+        int index = 0;
 
         public event UI UserEvent
         {
             // Using of accessors
             add
             {
-                evnt[1] = value;
+                Console.WriteLine("....");
+                evnt[index] = value;
+                index++;
             }
 
             remove
             {
-                evnt[1] = null;
+                evnt[--index] = null;
             }
         }
 
         public void OnUserEvent()
         {
-            evnt[1]();
+            evnt[index]?.Invoke();
         }
     }
 }

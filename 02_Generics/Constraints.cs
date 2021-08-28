@@ -6,22 +6,32 @@ using System.Threading.Tasks;
 
 namespace _02_Generics
 {
-    internal class UserInfo
+    public class UserInfo
     {
-        private int _val;
         public UserInfo(string Name, int Age) 
         {
             this.Name = Name;
             this.Age = Age;
-            
-            //if()
-            //{
-            //     //asdasd
-            //}
         }
 
         public string Name { get; set; }
         public int Age { get; set; }
+
+        public override string ToString() => $"User info: \n{Name} {Age}\n";
+    }
+
+    internal class User
+    {
+        public User(string Name, int Age)
+        {
+            this.Name = Name;
+            this.Age = Age;
+        }
+
+        public string Name { get; set; }
+        public int Age { get; set; }
+
+        public override string ToString() => $"User info: \n{Name} {Age}\n";
     }
 
     // Создадим класс, унаследованный от UserInfo
@@ -46,15 +56,12 @@ namespace _02_Generics
 
         public Info()
         {
-            UserList = new T[3];
+            UserList = new T[6];
             i = 0;
         }
 
         public void Add(T obj)
         {
-            if (i == 3) 
-                return;
-
             UserList[i] = obj;
             i++;
         }
