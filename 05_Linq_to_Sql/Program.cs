@@ -18,24 +18,25 @@ namespace _05_Linq_to_Sql
             DataContext db = new DataContext(connectionString);
 
             // Дістаємо дані з таблиці користувачів
-            Table<User> users = db.GetTable<User>();
-            foreach (var user in users)
-            {
-                Console.WriteLine($"{user.Id} \t{user.Name} \t{user.Age}");
-            }
+            Table<User2> users = db.GetTable<User2>();
+            //foreach (var user in users)
+            //{
+            //    Console.WriteLine($"{user.Id} \t{user.UserName} \t{user.Age}");
+            //}
 
-            // Фільтрація в запиті
-            // 
+            //// Фільтрація в запиті
+            //// 
             IQueryable<User> query = from u in db.GetTable<User>()
-                        where u.Age > 25
-                        //orderby u.Name
-                        select u;
-            // або так
-            // var query = db.GetTable<User>().Where(u => u.Age > 25).OrderBy(u => u.FirstName);
-            foreach (var user in query)
-            {
-                Console.WriteLine($"{user.Id} \t{user.Name} \t{user.Age}");
-            }
+                                     where u.Age > 25
+                                     //orderby u.Name
+                                     select u;
+
+            //// або так
+            //query = db.GetTable<User>().Where(u => u.Age > 25).OrderBy(u => u.UserName);
+            //foreach (var user in query)
+            //{
+            //    Console.WriteLine($"{user.Id} \t{user.UserName} \t{user.Age}");
+            //}
 
             // даний запит сформує SQL вираз
             // SELECT[t0].[Id], [t0].[Name] AS[FirstName], [t0].[Age]
@@ -44,7 +45,13 @@ namespace _05_Linq_to_Sql
             // ORDER BY[t0].[Name]
 
             // Змінимо об"єкт в таблиці
-            // Array.ForEach<List<User>>(users, u => u.Age = 28);
+            //Array.ForEach<User>(users, u => u.Age = 28);
+            //var user1 = users.FirstOrDefault(i => i.UserName == "Donald");
+            //user1.Age = 28;
+
+            var newUser = new User2() { UserName = "Roman100", Id = 100};
+            users.InsertOnSubmit(newUser);
+
             // оновимо дані в БД
             db.SubmitChanges();
         }
@@ -53,13 +60,23 @@ namespace _05_Linq_to_Sql
     [Table(Name = "Users")]
     public class User
     {
-        [Column(IsPrimaryKey = true, IsDbGenerated = true)]
+        [Column(Name="Id", IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
 
-        [Column(Name = "UserName")]
-        public string Name { get; set; }
+        [Column(Name = "Name")]
+        public string UserName { get; set; }
 
         [Column]
         public int Age { get; set; }
+    }
+
+    [Table(Name = "User2")]
+    public class User2
+    {
+        [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
+        public int Id { get; set; }
+
+        [Column(Name = "Name")]
+        public string UserName { get; set; }
     }
 }

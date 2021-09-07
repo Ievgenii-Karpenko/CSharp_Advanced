@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq.SqlClient;
 using System.Linq;
 using System.Text;
 
@@ -29,27 +30,31 @@ namespace _05_Linq
 
                 Console.WriteLine("-----------------------------------------------------------------------");
                 {
+                    // SELECT * FROM teams WHERE ...
                     var selectedTeams = from t in teams // определяем каждый объект из teams как t
-                                        where t.StartsWith("Б", StringComparison.InvariantCultureIgnoreCase) //фильтрация по критерию
-                                        orderby t descending // упорядочиваем по возрастанию
+                                        where SqlMethods.Like(t, "%/12/%")// t.StartsWith("Б", StringComparison.InvariantCultureIgnoreCase) //фильтрация по критерию
+                                        orderby t // упорядочиваем по возрастанию
                                         select t; // выбираем объект
 
-                    foreach (string s in selectedTeams)
-                        Console.WriteLine(s);
+                    //foreach (string s in selectedTeams)
+                    //    Console.WriteLine(s);
                 }
 
                 // Linq with help of extension methods
                 Console.WriteLine("-----------------------------------------------------------------------");
                 {
                     var selectedTeams = teams.Where(t => t.ToUpper().StartsWith("Б"))
-                                             .OrderBy(t => t);
+                                             .OrderBy(t => t)
+                                             .Select(t => t);
 
                     foreach (string s in selectedTeams)
                         Console.WriteLine(s);
                 }
 
                 // Combined way
-                int number = (from t in teams where t.ToUpper().StartsWith("Б") select t).Count();
+                int number = (from t in teams
+                              where t.ToUpper().StartsWith("Б")
+                              select t).Count();
             }
 
             // Filtering
@@ -87,7 +92,7 @@ namespace _05_Linq
                                                   select user;
 
                 // Same:
-                // var selectedUsers = users.Where(u=> u.Age > 25);
+                //var selectedUsers = users.Where(u=> u.Age > 25);
 
                 Console.WriteLine("Users with Age > 25");
                 foreach (User user in selectedUsers)
@@ -99,6 +104,10 @@ namespace _05_Linq
                                      where user.Age < 28
                                      where lang == "английский"
                                      select user;
+
+                selectedUsers2 = from user in users
+                                 where user.Age < 28 && user.Languages.Contains("английский")
+                                 select user;
 
                 Console.WriteLine();
                 Console.WriteLine("Users with Age < 28 and with english");
@@ -125,7 +134,7 @@ namespace _05_Linq
                                 DateOfBirth = DateTime.Now.Year - u.Age
                             };
                 //Same with extensions
-                //var items = users.Select(u => new
+                //items = users.Select(u => new
                 //{
                 //    FirstName = u.Name,
                 //    DateOfBirth = DateTime.Now.Year - u.Age
@@ -176,6 +185,17 @@ namespace _05_Linq
                              from phone in phones
                              select new { Name = user.Name, Phone = phone.Name };
 
+                //foreach (var u in users)
+                //{
+                //    foreach (var ph in phones)
+                //    {
+                //        if(u.Name == "Sam")
+                //        {
+
+                //        }
+                //    }
+                //}
+
                 foreach (var p in people)
                     Console.WriteLine($"{p.Name} - {p.Phone}");
             }
@@ -201,7 +221,7 @@ namespace _05_Linq
 
                 var sortedUsers = from u in users
                                   orderby u.Name // Сортувати за полем об"єкту (за зростанням)
-                                  orderby u.Name descending // Сортувати за полем об"єкту (за спаданням)
+                                  orderby u.Age descending // Сортувати за полем об"єкту (за спаданням)
                                   orderby u.Name, u.Age // Сортування за двома ознаками
                                   select u;
 
@@ -237,7 +257,7 @@ namespace _05_Linq
 
                 int[] numbersF = { -2, -1, 0, 1, 2, 3, 4, 5, 6, 7 };
 
-                var resultF = numbersF.Where(i => i > 0).Select(Factorial); //Метод Select як параметр приймає тип Func<TSource, TResult> selector.
+                var resultF = numbersF.Where(i => i > 0).Select(Factorial).OrderByDescending(t => t); //Метод Select як параметр приймає тип Func<TSource, TResult> selector.
 
                 foreach (int i in resultF)
                     Console.WriteLine(i);
@@ -248,7 +268,7 @@ namespace _05_Linq
                 string[] soft = { "Microsoft", "Google", "Apple" };
                 string[] hard = { "Apple", "IBM", "Samsung" };
 
-                // різниця наборів
+                // різниця множини
                 var result = soft.Except(hard);
                 result = soft.Union(hard);
                 result = soft.Intersect(hard);
@@ -272,8 +292,8 @@ namespace _05_Linq
                     new Phone {Name="LG G 4", Company="LG" }
                 };
 
-                var phoneGroups = from phone in phones
-                                  group phone by phone.Company;
+                IEnumerable<IGrouping<string, Phone>> phoneGroups = from phone in phones
+                                                                    group phone by phone.Company;
 
                 foreach (IGrouping<string, Phone> g in phoneGroups)
                 {
@@ -286,9 +306,8 @@ namespace _05_Linq
 
             //Different
             {
-                List<int> numbers = new List<int>(){ 1, 2, 3, 4, 5 };
-
-                var res = numbers.FirstOrDefault(i => i==10);
+                List<int> numbers4 = new List<int>() { 1, 2, 10, 4, 5 };
+                var res = numbers4.Where(i => i > 5);
 
                 //bool isAllMoreThanZero;
                 //foreach (var item in collection)
@@ -296,21 +315,41 @@ namespace _05_Linq
                 //    item
                 //}
 
-                IEnumerable<int> nn = numbers.Where(i => i > 3).ToList();
-
-                numbers.Add(6);
+                //Lazy
+                IEnumerable<int> nn = numbers4.Where(i => i > 3).ToList();
+                int n = nn.Count();
+                numbers4.Add(6);
+                numbers4.Add(5);
 
                 Console.WriteLine("Number of elemenmts > 3: " + nn.Count());
 
-                int query = numbers.Aggregate((x, y) => x - y); // те ж саме, що і "1 - 2 - 3 - 4 - 5"
+                int query = numbers4.Aggregate((x, y) => x - y); // те ж саме, що і "1 - 2 - 10 - 4 - 5"
 
-                int size = numbers.Count(i => i % 2 == 0 && i > 2); // підрахунок елементів за умовою
+                int size = numbers4.Count(i => i % 2 == 0 && i > 2); // підрахунок елементів за умовою
 
-                decimal sum2 = numbers.Sum(); // Сумма елеметнів
+                decimal sum2 = numbers4.Sum(); // Сумма елеметнів
 
                 string[] teams = { "Бавария", "Боруссия", "Реал Мадрид", "Манчестер Сити", "ПСЖ", "Барселона" };
                 foreach (var t in teams.TakeWhile(x => x.StartsWith("Б"))) //SkipWhile
                     Console.WriteLine(t);
+
+
+
+                for (int i = 1; i < 11; i++)
+                {
+                    int digit = GetNextNumber().Take(i).Aggregate((x, y) => x * y);
+                    Console.WriteLine($"Factorial: {digit}");
+                }
+                
+            }
+        }
+
+        private static IEnumerable<int> GetNextNumber()
+        {
+            int i = 0;
+            while(true)
+            {
+                yield return ++i;
             }
         }
 

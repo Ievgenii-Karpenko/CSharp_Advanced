@@ -8,8 +8,8 @@ namespace _05_Dynamic
         static void Main(string[] args)
         {
             // Dynamic variables
-            { 
-                object x = 3; // тут x - це int
+            {
+                dynamic x = 3; // тут x - це int
                 Console.WriteLine(x);
 
                 x = "Hello World"; // x змінює свій тип на string

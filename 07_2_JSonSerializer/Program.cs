@@ -16,14 +16,17 @@ namespace _07_2_JSonSerializer
 
     class Person
     {
-        public List<Company> data = new List<Company>();
+        [JsonInclude]
+        public Dictionary<int, Company> data { get; set; }
 
-        public string Name;
+        [JsonPropertyName("firstname")]
+        public string Name { get; set; }
+        public int Age { get; set; }
     }
 
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             // 1
             {
@@ -31,44 +34,48 @@ namespace _07_2_JSonSerializer
                 {
                     WriteIndented = true,
                     //IgnoreNullValues = true,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
                     //NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString
                 };
 
                 Person tom = new Person() { Name = "Tom" };
-                tom.data.Add(new Company() { Age = 15 });
-                tom.data.Add(new Company() { Age = 57 });
+                Person john = new Person() { Name = "john" };
+                //tom.data.Add(new Company() { Age = 15 });
+                //tom.data.Add(new Company() { Age = 57 });
 
-                //Dictionary<int, Company> data = new Dictionary<int, Company>();
-                //data.Add(2, new Company() { Age = 25});
-                //data.Add(7, new Company() { Age = 32 });
+                Dictionary<int, Company> data = new Dictionary<int, Company>();
+                data.Add(2, new Company() { Age = 25 });
+                data.Add(7, new Company() { Age = 32 });
 
+                tom.data = data;
 
-                string json = JsonSerializer.Serialize(tom, options);
+                string json = JsonSerializer.Serialize(new[] { tom, john }, new() { WriteIndented = true, IgnoreNullValues = true });
                 // 
                 //string json = "{\"firstname\":\"Tom\",\"Age\":\"35\"}";
 
                 Console.WriteLine(json);
+                
 
-                Person restoredPerson = JsonSerializer.Deserialize<Person>(json, options);
+                var restoredPerson = JsonSerializer.Deserialize<Dictionary<string, string>>(json, options);
                 //Console.WriteLine(restoredPerson.Name);
             }
 
-            // Async
-            //{
-            //    using (FileStream fs = new FileStream("user.json", FileMode.OpenOrCreate))
-            //    {
-            //        Person tom = new Person() { Name = "Tom", Age = 35 };
-            //        Task a = JsonSerializer.SerializeAsync<Person>(fs, tom);
-            //        Console.WriteLine("Data has been saved to file");
-            //    }
+            //Async
+            {
+                using (FileStream fs = new FileStream("user.json", FileMode.OpenOrCreate))
+                {
+                    Person tom = new Person() { Name = "Tom", Age = 35 };
+                    Task a = JsonSerializer.SerializeAsync<Person>(fs, tom);
+                    Console.WriteLine("Data has been saved to file");
+                }
 
-            //    // Read
-            //    using (FileStream fs = new FileStream("user.json", FileMode.OpenOrCreate))
-            //    {
-            //        Person restoredPerson = await JsonSerializer.DeserializeAsync<Person>(fs);
-            //        Console.WriteLine($"Name: {restoredPerson.Name}  Age: {restoredPerson.Age}");
-            //    }
-            //}
+                // Read
+                using (FileStream fs = new FileStream("user.json", FileMode.OpenOrCreate))
+                {
+                    Person restoredPerson = await JsonSerializer.DeserializeAsync<Person>(fs);
+                    Console.WriteLine($"Name: {restoredPerson.Name}  Age: {restoredPerson.Age}");
+                }
+            }
 
             //using of attributes 
             //[JsonPropertyName("firstname")]

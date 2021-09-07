@@ -11,6 +11,7 @@ namespace _04_2_Events
     {
         // Создадим событие, используя обобщенный делегат
         public event EventHandler<MyEventArgs> KeyDown;
+        //public event Func<MyEventArgs> KeyDown;
 
         public void OnKeyDown(char ch)
         {
@@ -24,10 +25,31 @@ namespace _04_2_Events
         }
     }
 
+    //class MouseEvent
+    //{
+    //    // Создадим событие, используя обобщенный делегат
+    //    public event EventHandler<MyEventArgs> KeyDown;
+
+    //    public void OnKeyDown(char ch)
+    //    {
+    //        MyEventArgs c = new MyEventArgs();
+
+    //        if (KeyDown != null)
+    //        {
+    //            c.ch = ch;
+    //            KeyDown(this, c);
+    //        }
+    //    }
+    //}
+
     class Program
     {
         public static void SomeM(object sender, MyEventArgs arg)
         {
+            //if (sender is KeyEvent)
+            //    ;///
+            //else (sender is MouseEvent)
+            //        ;
             Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
 

@@ -31,7 +31,7 @@ namespace _06_3_EFCore_Linq
             using (ApplicationContext db = new ApplicationContext())
             {
                 //var users = db.Users.Include(p=>p.Company).Where(p=> p.CompanyId == 1);
-                var users = (from user in db.Users.Include(p => p.Company)
+                var users = (from user in db.Users.Include(u => u.Company)
                              where user.CompanyId == 1
                              select user).ToList();  //.ToListAsync();
 
@@ -104,7 +104,7 @@ namespace _06_3_EFCore_Linq
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           // optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=helloappdb;Trusted_Connection=True;");
+           optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=helloappdb;Trusted_Connection=True;");
         }
     }
 }

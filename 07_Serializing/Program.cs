@@ -23,7 +23,7 @@ namespace _07_Serializing
                 // get file stram to write our object
                 try
                 {
-                    using (FileStream fs = new FileStream("people.dat", FileMode.Create))
+                    using (FileStream fs = new FileStream("person.dat", FileMode.Create))
                     {
                         formatter.Serialize(fs, person);
                     }
@@ -36,7 +36,7 @@ namespace _07_Serializing
 
 
                 // deserialize from people.dat
-                using (FileStream fs = new FileStream("people.dat", FileMode.OpenOrCreate))
+                using (FileStream fs = new FileStream("person.dat", FileMode.OpenOrCreate))
                 {
                     Person newPerson = (Person)formatter.Deserialize(fs);
 

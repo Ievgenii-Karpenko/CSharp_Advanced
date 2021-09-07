@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -10,12 +11,16 @@ namespace _06_EFCore
     {
         static void Main(string[] args)
         {
-            //Console.OutputEncoding = Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
             using (ApplicationContext db = new ApplicationContext())
             {
                 // создаем два объекта User
                 User user1 = new User { Name = "Tom", Age = 33 };
                 User user2 = new User { Name = "Alice", Age = 26 };
+                //user1.Languages = new List<Languages>() { new ("en"), new("uk"), new("ru")};
+                //user2.Languages = new List<Languages>() { new("en"), new("fr"), new("it") };
+                //user1.Company = new Company() { Name = "Microsoft" };
+                //user2.Company = new Company() { Name = "Intel" };
 
                 // добавляем их в бд
                 db.Users.Add(user1);
@@ -46,10 +51,10 @@ namespace _06_EFCore
                     // Добавление
                     db.Users.Add(user1);
                     db.Users.Add(user2);
-                    db.SaveChanges();
+                    //db.SaveChanges();
                 }
 
-                // получение
+                //// получение
                 using (ApplicationContext db = new ApplicationContext())
                 {
                     // получаем объекты из бд и выводим на консоль
@@ -67,15 +72,15 @@ namespace _06_EFCore
                 using (ApplicationContext db = new ApplicationContext())
                 {
                     // получаем первый объект
-                    //user = db.Users.FirstOrDefault();
-                    //if (user != null)
-                    //{
-                    //    user.Name = "Bob";
-                    //    user.Age = 44;
-                    //    //обновляем объект
-                    //    //db.Users.Update(user);
-                    //    db.SaveChanges();
-                    //}
+                    var user = db.Users.FirstOrDefault();
+                    if (user != null)
+                    {
+                        user.Name = "Bob";
+                        user.Age = 44;
+                        //обновляем объект
+                        //db.Users.Update(user);
+                        db.SaveChanges();
+                    }
                 }
 
                 //using (ApplicationContext db = new ApplicationContext())
@@ -114,7 +119,7 @@ namespace _06_EFCore
         }
     }
 
-    [DisplayColumn("asdads")]
+    //[DisplayColumn("asdads")]
     public class User
     {
         [Key]
@@ -122,7 +127,26 @@ namespace _06_EFCore
         
         public string Name { get; set; }
         public int Age { get; set; }
+        //public Company Company { get; set; }
+
+        //public List<Languages> Languages { get; set; }
     }
+
+    public class Company
+    {
+        public int UserId { get; set; }
+        public string Name { get; set; }
+    }
+
+    //public class Languages
+    //{
+    //    public Languages(string name)
+    //    {
+    //        Name = name;
+    //    }
+    //    public int UserId { get; set; }
+    //    public string Name { get; set; }
+    //}
 
     public class ApplicationContext : DbContext
     {
@@ -133,9 +157,14 @@ namespace _06_EFCore
             Database.EnsureCreated();
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().HasKey(u => u.Id).HasName("UserId");
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=EFdb;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=EFdb2;Trusted_Connection=True;");
             optionsBuilder.LogTo(Console.WriteLine);
         }
     }

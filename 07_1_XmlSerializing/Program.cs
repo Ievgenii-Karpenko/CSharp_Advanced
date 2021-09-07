@@ -43,11 +43,12 @@ namespace Serialization
     {
         private string n;
 
-        [XmlElement("PersonName")]
-        public string Name { get => n; }
+        [XmlAttribute("PersonName")]
+        public string Name { get => n; set => n = value; }
         //[Xm]
         public int Age { get; set; }
 
+        [XmlIgnore]
         public int myInt; // private fields are ignored
 
         public Company Co { get; set; }

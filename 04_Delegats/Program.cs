@@ -6,10 +6,28 @@ namespace _04_Delegats
     delegate void IntOperation2(int i, int j, float s);
     //int asd = 10;
 
-    public static class A
+    public class A
     {
-        public static int AINT = 10;
+        public int AINT = 10;
+        public B bObj = null;
+
+        public void DoSmthWithB()
+        {
+            Console.WriteLine(bObj.BINT);
+            bObj.ShowInfoAboutA(this);
+        }
     }
+
+
+    public class B
+    {
+        public int BINT = 20;
+        public void ShowInfoAboutA(A obj)
+        {
+            Console.WriteLine(obj.AINT);
+        }
+    }
+
 
     class Program
     {
@@ -24,6 +42,12 @@ namespace _04_Delegats
 
         static void Main()
         {
+            A a = new A();
+            B b = new B();
+
+            b.ShowInfoAboutA(a);
+
+
             {
                 //Delegate
                 // Make delegate
@@ -72,7 +96,7 @@ namespace _04_Delegats
                 // MyDelegate += Console.WriteLine; - getting error
 
 
-                //// Выполняем делегат
+                // Выполняем делегат
                 MyDelegate(ref myArr);
             }
 
@@ -113,10 +137,11 @@ namespace _04_Delegats
             }
 
             //Anonymous methods
+            Func<int, int> del;
             {
                 int result = 0;
-                //Summa del = new delegate (int n)
-                Summa del = (n) =>
+                //Summa del = new delegate (int n);
+                del = (n) =>
                 {
                     for (int i = 0; i <= n; i++)
                         result += i;
@@ -125,6 +150,7 @@ namespace _04_Delegats
 
                 Console.WriteLine(del(10));
             }
+            //del = anotherMethod;
             //Console.WriteLine(del(10));
 
             Console.ReadLine();
@@ -136,6 +162,6 @@ namespace _04_Delegats
         }
 
         delegate void OpStroke(ref int[] arr);
-        delegate int Summa(int number);
+        //delegate int Summa(int number);
     }
 }

@@ -41,6 +41,7 @@ namespace ConsoleServerChat
 
         public void Broadcast(string msg)
         {
+            Console.WriteLine(msg);
             // 1) decode string to bytes
             byte[] data = new byte[64]; // need to implement
             foreach (var item in clients)
